@@ -1,0 +1,49 @@
+# Nama workflow yang akan muncul di tab "Actions" di GitHub
+name: Java CI with Maven
+
+# Menentukan kapan workflow ini akan dijalankan
+on:
+  # Dijalankan setiap kali ada 'push' ke branch 'main'
+  push:
+    branches: [ "main" ]
+  # Dijalankan setiap kali ada 'pull request' yang ditujukan ke branch 'main'
+  pull_request:
+    branches: [ "main" ]
+
+# Mendefinisikan satu atau lebih 'jobs' yang akan dieksekusi
+jobs:
+  # Nama job (bisa apa saja, 'build' adalah nama yang umum)
+  build:
+    # Menentukan jenis mesin virtual (runner) yang akan digunakan
+    runs-on: ubuntu-latest
+
+    # Mendefinisikan langkah-langkah (steps) yang akan dijalankan dalam job ini
+    steps:
+      # Langkah 1: Checkout Kode
+      # Menggunakan action 'actions/checkout@v4' untuk mengunduh kode dari repositori
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Langkah 2: Setup JDK 17
+      # Menggunakan action 'actions/setup-java@v4' untuk menginstal Java Development Kit
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin' # Distribusi Java yang populer (sebelumnya AdoptOpenJDK)
+          cache: maven # Mengaktifkan caching untuk dependensi Maven agar build berikutnya lebih cepat
+
+      # Langkah 3: Build dengan Maven
+      # Menjalankan perintah Maven untuk membersihkan, meng-compile, menjalankan test, dan mem-package aplikasi
+      # -B flag (batch mode) mencegah Maven meminta input interaktif
+      - name: Build with Maven
+        run: mvn -B package --file pom.xml
+
+      # (Opsional) Langkah 4: Upload Artifact
+      # Anda bisa mengaktifkan langkah ini jika ingin menyimpan file .jar yang dihasilkan oleh proses build.
+      # Hapus tanda '#' di bawah untuk mengaktifkannya.
+      # - name: Upload artifact for deployment
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: appointment-system-jar
+      #     path: target/*.jar

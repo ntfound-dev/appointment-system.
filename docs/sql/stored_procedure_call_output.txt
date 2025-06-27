@@ -1,0 +1,8 @@
+(Diasumsikan ada 2 janji temu untuk Dr. Budi Santoso (ID=1) pada tanggal tersebut)
+
++----+----------------+---------------------+
+| id | patient_name   | appointment_time    |
++----+----------------+---------------------+
+| 3  | Andi Wijaya    | 2025-06-24 10:00:00 |
+| 5  | Rina Hartono   | 2025-06-24 14:30:00 |
++----+----------------+---------------------+
