@@ -1,141 +1,140 @@
-Proyek Sistem Janji Temu Dokter (Doctor Appointment System)
-Repositori ini berisi kode sumber untuk aplikasi web manajemen janji temu antara dokter dan pasien, yang dibangun menggunakan Java dan Spring Boot, serta diamankan dengan JSON Web Tokens (JWT).
+Sistem Janji Temu Dokter
+Repositori ini berisi kode sumber untuk aplikasi web manajemen janji temu medis antara dokter dan pasien. Proyek ini dibangun menggunakan Java dan Spring Boot, dengan frontend web sederhana, dan diamankan menggunakan Spring Security & JWT.
 
-1. Ringkasan Aplikasi
-Aplikasi ini memfasilitasi proses penjadwalan janji temu medis dengan antarmuka REST API dan frontend web sederhana. Terdapat tiga peran utama:
+Daftar Isi
+Tentang Proyek
 
-Admin: Mengelola data master dokter (menambah, mengubah, menghapus) melalui API.
+Fitur Utama
 
-Dokter: Melihat jadwal janji temu yang telah dibuat untuknya.
+Teknologi
 
-Pasien: Mencari dokter, melihat ketersediaan, dan membuat janji temu.
+Memulai Proyek
 
-Sistem ini menggunakan otentikasi berbasis JWT untuk mengamankan endpoint API, memastikan hanya pengguna yang berwenang yang dapat mengakses data sensitif.
+Prasyarat
 
-2. Struktur Repositori
-Struktur folder proyek telah diperbarui untuk mencakup kelas keamanan dan frontend.
+Instalasi & Setup
 
-.
-├── .github/
-│   └── workflows/
-│       └── ci.yml
-├── docs/
-│   ├── screenshots/
-│   └── sql/
-├── src/
-│   ├── main/
-│   │   ├── java/
-│   │   │   └── com/example/appointmentsystem/
-│   │   │       ├── controller/  # AuthController, DoctorController, dll.
-│   │   │       ├── dto/         # LoginRequest, JwtResponse, dll.
-│   │   │       ├── model/       # Entitas JPA
-│   │   │       ├── repository/  # Repositori Spring Data JPA
-│   │   │       ├── security/    # SecurityConfig, JwtAuthFilter, UserDetailsServiceImpl
-│   │   │       └── service/     # AppointmentService, TokenService
-│   │   └── resources/
-│   │       ├── static/
-│   │       │   ├── css/style.css
-│   │       │   └── js/script.js
-│   │       ├── templates/
-│   │       │   ├── login.html
-│   │       │   └── doctors.html
-│   │       ├── application.properties
-│   │       └── schema.sql
-│   └── test/
-├── Dockerfile
-├── pom.xml
-└── README.md
+Cara Penggunaan
 
-Link Cepat ke Bagian Penting:
+Menjalankan Backend
 
-Konfigurasi Keamanan
+Menjalankan dengan Docker
 
-Frontend (HTML)
+Mengakses Aplikasi
 
-Logika Frontend (JS)
+Contoh Penggunaan API
 
-3. Teknologi yang Digunakan
-Backend: Java 17, Spring Boot 3.x
+Database
 
-Database: H2 (default), JPA/Hibernate
+1. Tentang Proyek
+Proyek ini adalah sebuah REST API dan aplikasi web sederhana untuk memfasilitasi penjadwalan janji temu antara dokter dan pasien.
 
-Keamanan: Spring Security, JSON Web Token (JWT)
+Fitur Utama
+Tiga Peran Pengguna: Admin, Dokter, dan Pasien dengan hak akses berbeda.
+
+Otentikasi & Otorisasi: Sistem login yang aman menggunakan JSON Web Token (JWT).
+
+Manajemen Janji Temu: Pasien dapat mencari dokter, melihat ketersediaan, dan membuat janji temu.
+
+Manajemen Dokter: Admin dapat mengelola data master dokter.
+
+Manajemen Resep: Dokter dapat menambahkan resep medis setelah konsultasi.
+
+Teknologi
+Backend: Java 17, Spring Boot 3.2.5, Spring Security
+
+Database: H2 (In-Memory), Spring Data JPA (Hibernate)
 
 Build Tool: Apache Maven
 
 Containerization: Docker
 
-CI/CD: GitHub Actions
+2. Memulai Proyek
+Berikut panduan untuk menjalankan proyek ini di mesin lokal Anda.
 
-4. Cara Build dan Menjalankan Aplikasi
 Prasyarat
-Java JDK 17 atau lebih tinggi.
+Java Development Kit (JDK) versi 17 atau lebih tinggi.
 
-Apache Maven.
+Apache Maven versi 3.8 atau lebih tinggi.
 
-Langkah-langkah
-1. Clone Repositori & Build
+Docker Desktop (opsional, jika ingin menjalankan via Docker).
 
-git clone <URL_REPOSITORY_ANDA>
-cd <NAMA_FOLDER_PROYEK>
-mvn clean package
+Git untuk melakukan kloning repositori.
 
-2. Jalankan Aplikasi
+Instalasi & Setup
+Clone repositori:
 
-java -jar target/appointment-system-0.0.1-SNAPSHOT.jar
+git clone https://github.com/your-username/appointment-system.git
+cd appointment-system
 
-Aplikasi akan berjalan di http://localhost:8080.
+Pastikan Konfigurasi Benar:
+Buka src/main/resources/application.properties. Pengaturan default sudah menggunakan database H2 in-memory. Jika Anda ingin menggunakan database lain (misal: MySQL), sesuaikan properti spring.datasource.
 
-3. Akses Frontend Web
-Setelah aplikasi berjalan, Anda bisa mengakses antarmuka web sederhana:
+3. Cara Penggunaan
+Menjalankan Backend
+Cara termudah untuk menjalankan aplikasi adalah menggunakan Maven wrapper atau Maven yang sudah terinstal.
 
-Halaman Login: Buka http://localhost:8080/login.html
+# Perintah ini akan mengompilasi dan menjalankan aplikasi
+mvn spring-boot:run
 
-Gunakan kredensial dari schema.sql (misal: andi.w@example.com / password123)
+Setelah beberapa saat, aplikasi akan berjalan di http://localhost:8080.
 
-Halaman Dokter: Setelah login berhasil, Anda akan diarahkan ke http://localhost:8080/doctors.html.
+Menjalankan dengan Docker
+Build Image: Perintah ini akan membuat Docker image bernama appointment-app.
 
-5. Skrip & Prosedur SQL
-Definisi tabel dan data awal ada di src/main/resources/schema.sql. Anda dapat memeriksa isinya melalui H2 Console di http://localhost:8080/h2-console setelah aplikasi berjalan.
+docker build -t appointment-app .
 
-6. Contoh Perintah curl untuk Menguji API
-Berikut adalah cara berinteraksi dengan API menggunakan curl.
+Jalankan Kontainer: Perintah ini akan menjalankan aplikasi di dalam kontainer Docker.
 
-A. Mendapatkan Token Otentikasi
-Pertama, lakukan login untuk mendapatkan JWT.
+docker run -d -p 8080:8080 appointment-app
 
-# Kirim request login dengan email dan password
-curl -X POST http://localhost:8080/api/auth/login \
--H "Content-Type: application/json" \
--d '{"email":"andi.w@example.com", "password":"password123"}'
+Mengakses Aplikasi
+Frontend Web: Buka browser dan akses http://localhost:8080/login.html.
 
-Output (Contoh):
+Kredensial Default:
 
-{
-    "token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbmRpLnc...",
-    "type": "Bearer"
-}
+Pasien: andi.w@example.com / password123
 
-Simpan nilai token tersebut untuk digunakan pada request berikutnya.
+Dokter: budi.s@example.com / password123
 
-B. Mengakses Endpoint Terproteksi
-Gunakan token yang didapat sebagai Bearer token di header Authorization.
+Admin: admin@example.com / password123
 
-# Simpan token ke dalam variabel (bash/zsh)
-TOKEN="eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbmRpLnc..."
+4. Contoh Penggunaan API
+Anda bisa menguji endpoint API menggunakan curl atau alat lain seperti Postman. Berikut contoh menggunakan PowerShell.
 
-# Mendapatkan ketersediaan dokter dengan ID=1 (memerlukan token)
-curl -X GET "http://localhost:8080/api/doctors/1/availability?date=2025-06-27" \
--H "Authorization: Bearer $TOKEN"
+1. Login & Dapatkan Token
 
-# Membuat janji temu baru (memerlukan token Pasien)
-curl -X POST http://localhost:8080/api/appointments/book \
--H "Content-Type: application/json" \
--H "Authorization: Bearer $TOKEN" \
--d '{"doctorId": 1, "appointmentTime": "2025-06-27T10:00:00"}'
+$response = Invoke-RestMethod -Uri http://localhost:8080/api/auth/login -Method Post -ContentType "application/json" -Body '{"email":"andi.w@example.com", "password":"password123"}'
 
-C. Mengakses Endpoint Publik
-Endpoint ini tidak memerlukan token otentikasi.
+Token Anda sekarang tersimpan di variabel $response.token.
 
-# Mendapatkan daftar semua dokter (diizinkan untuk publik)
-curl -X GET http://localhost:8080/api/doctors
+2. Buat Header Otorisasi
+
+$headers = @{"Authorization" = "Bearer $($response.token)"}
+
+3. Buat Janji Temu (sebagai Pasien)
+
+Invoke-RestMethod -Uri http://localhost:8080/api/appointments/book -Method Post -ContentType "application/json" -Headers $headers -Body '{"doctorId": 1, "appointmentTime": "2025-07-20T11:00:00"}'
+
+4. Lihat Ketersediaan Dokter
+
+Invoke-RestMethod -Uri "http://localhost:8080/api/doctors/1/availability?date=2025-07-20" -Method Get -Headers $headers
+
+5. Database
+Aplikasi ini menggunakan H2, sebuah database in-memory yang akan di-reset setiap kali aplikasi di-restart.
+
+Skema Awal: Didefinisikan di src/main/resources/schema.sql.
+
+Akses H2 Console:
+
+Buka browser ke http://localhost:8080/h2-console.
+
+Pastikan pengaturan berikut:
+
+JDBC URL: jdbc:h2:mem:testdb
+
+User Name: sa
+
+Password: password
+
+Klik Connect.
